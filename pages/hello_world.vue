@@ -1,10 +1,8 @@
 <script>
-  import HelloWorld from '@@/components/HelloWorld.vue'
+import HelloWorld from '@@/components/HelloWorld.vue'
 </script>
 
 <template>
-  <div>
-    Test
-  </div>
+  <div>Test</div>
   <HelloWorld />
 </template>
