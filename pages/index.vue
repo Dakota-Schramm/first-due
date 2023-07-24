@@ -8,23 +8,29 @@ const addSecondsToTime = (date, seconds) => {
   return new Date(date.getTime() + seconds)
 }
 
-const now = new Date()
-const desiredTime = addSecondsToTime(now, 15)
+// const now = new Date()
+// const desiredTime = addSecondsToTime(now, 15)
 
-const countDownTime = desiredTime.getTime() - now.getTime()
+// const countDownTime = desiredTime.getTime() - now.getTime()
 
-const state = reactive({
-  time: countDownTime,
-  message: 'This is my custom message!'
-})
+const state = reactive([
+  { time: 15, message: 'NUMBAH ONE' },
+  { time: 15, message: 'Number two :^)' }
+])
 
 watch(state, () => {
-  if (state.time !== 0) incrementTime()
+  if (state.length < 0) return;
+
+  const time = state[0].time;
+  if (0 <= time) incrementTime()
+  else if (time === -1) state.shift()
+  else console.log('No more messages to display.')
 }, { immediate: true })
 
+
 function incrementTime() {
-  if (state.time > 0) setTimeout(() => { state.time-- }, ONE_SECOND);
-  else clearInterval(interval)
+  const timerIsActive =  -1 <= state[0].time;
+  if (timerIsActive) setTimeout(() => { state[0].time-- }, ONE_SECOND);
 }
 
 </script>
@@ -35,10 +41,10 @@ function incrementTime() {
   </header>
   <main class="flex flex-col items-center justify-center w-full h-screen text-lg text-white bg-blue-600">
     <div class="text-3xl font-bold">
-      {{ convertDisplayTime(state.time) }}
+      {{ convertDisplayTime(state[0].time) }}
     </div>
     <p>
-      {{ state.message }}
+      {{ state[0].message }}
     </p>
   </main>
   <footer class="mt-6">
